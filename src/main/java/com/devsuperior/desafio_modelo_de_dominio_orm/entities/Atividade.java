@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Set;
 
 @Entity
-@Table(name="tb_atividade")
+@Table(name = "tb_atividade")
 public class Atividade {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
@@ -22,12 +22,16 @@ public class Atividade {
     private Double preco;
 
     @ManyToOne
-    @JoinColumn(name="categoria_id")
+    @JoinColumn(name = "categoria_id")
     private Categoria categoria;
 
     @OneToMany(mappedBy = "atividade")
     @NotEmpty
     private List<Bloco> blocos = new ArrayList<>();
+
+    @ManyToMany
+    @JoinTable(name = "tb_atividade_participante", joinColumns = @JoinColumn(name = "atividade_id"), inverseJoinColumns = @JoinColumn(name = "participante_id"))
+    private Set<Participante> participantes = new HashSet<>();
 
     public Atividade() {
     }
