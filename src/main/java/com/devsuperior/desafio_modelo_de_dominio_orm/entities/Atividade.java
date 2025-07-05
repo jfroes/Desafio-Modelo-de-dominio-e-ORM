@@ -1,6 +1,13 @@
 package com.devsuperior.desafio_modelo_de_dominio_orm.entities;
 
+import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name="tb_atividade")
@@ -17,6 +24,10 @@ public class Atividade {
     @ManyToOne
     @JoinColumn(name="categoria_id")
     private Categoria categoria;
+
+    @OneToMany(mappedBy = "atividade")
+    @NotEmpty
+    private List<Bloco> blocos = new ArrayList<>();
 
     public Atividade() {
     }
@@ -67,5 +78,9 @@ public class Atividade {
 
     public void setCategoria(Categoria categoria) {
         this.categoria = categoria;
+    }
+
+    public List<Bloco> getBlocos() {
+        return blocos;
     }
 }
